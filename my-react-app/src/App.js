@@ -1,9 +1,21 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { AppLoading } from 'expo';
+import { useFonts } from '@expo-google-fonts/inter'; // Importa el hook useFonts
 import { AntDesign } from '@expo/vector-icons';
 
 const App = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Carga la fuente 'Roboto-Regular' utilizando el hook useFonts
+  let [fontsLoaded] = useFonts({
+    'Roboto-Regular': require('./fonts/Roboto/Roboto-Regular.tff'),
+  });
+
+  // Verifica si las fuentes se han cargado correctamente
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   const toggleMenuVisibility = () => {
     setMenuOpen(!menuOpen);
@@ -26,7 +38,7 @@ const App = () => {
       {/* Vista de menú */}
       {menuOpen && (
         <View style={styles.menuView}>
-          <Text>Maquinas Electricas</Text>
+          <Text style={{ fontFamily: 'Roboto-Regular' }}>Maquinas Electricas</Text>
         </View>
       )}
     </View>
