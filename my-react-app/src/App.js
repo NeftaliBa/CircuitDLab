@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import { AppLoading } from 'expo';
+import AppLoading from 'expo-app-loading';  // Modificado aquí
 import { useFonts } from '@expo-google-fonts/inter'; // Importa el hook useFonts
 import { AntDesign } from '@expo/vector-icons';
 
@@ -9,7 +9,7 @@ const App = () => {
 
   // Carga la fuente 'Roboto-Regular' utilizando el hook useFonts
   let [fontsLoaded] = useFonts({
-    'Roboto-Regular': require('./fonts/Roboto/Roboto-Regular.tff'),
+    'Roboto-Regular': require('Roboto-Regular.ttf'),
   });
 
   // Verifica si las fuentes se han cargado correctamente
@@ -23,19 +23,16 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      {/* Botón de menú en la parte superior izquierda */}
       <View style={[styles.topLeft, { top: 100 }]}>
         <TouchableOpacity style={styles.menuButton} onPress={toggleMenuVisibility}>
           <AntDesign name="menu-fold" size={24} color="white" />
         </TouchableOpacity>
       </View>
-      {/* Botón en la parte inferior derecha */}
       <View style={styles.bottomRight}>
         <TouchableOpacity style={styles.button} onPress={() => console.log("Botón presionado")}>
           <AntDesign name="tool" size={24} color="white" />
         </TouchableOpacity>
       </View>
-      {/* Vista de menú */}
       {menuOpen && (
         <View style={styles.menuView}>
           <Text style={{ fontFamily: 'Roboto-Regular' }}>Maquinas Electricas</Text>
