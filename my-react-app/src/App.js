@@ -1,21 +1,8 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import AppLoading from 'expo-app-loading';  // Modificado aquí
-import { useFonts } from '@expo-google-fonts/inter'; // Importa el hook useFonts
-import { AntDesign } from '@expo/vector-icons';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
-const App = () => {
+const MenuExample = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-
-  // Carga la fuente 'Roboto-Regular' utilizando el hook useFonts
-  let [fontsLoaded] = useFonts({
-    'Roboto-Regular': require('Roboto-Regular.ttf'),
-  });
-
-  // Verifica si las fuentes se han cargado correctamente
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
 
   const toggleMenuVisibility = () => {
     setMenuOpen(!menuOpen);
@@ -23,19 +10,27 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.topLeft, { top: 100 }]}>
-        <TouchableOpacity style={styles.menuButton} onPress={toggleMenuVisibility}>
-          <AntDesign name="menu-fold" size={24} color="white" />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.bottomRight}>
-        <TouchableOpacity style={styles.button} onPress={() => console.log("Botón presionado")}>
-          <AntDesign name="tool" size={24} color="white" />
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={[styles.button, styles.topLeftButton]} onPress={toggleMenuVisibility}>
+        <Text style={styles.buttonText}>Botón 1</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.button, styles.bottomRightButton]} onPress={toggleMenuVisibility}>
+        <Text style={styles.buttonText}>Botón 2</Text>
+      </TouchableOpacity>
+
       {menuOpen && (
-        <View style={styles.menuView}>
-          <Text style={{ fontFamily: 'Roboto-Regular' }}>Maquinas Electricas</Text>
+        <View style={styles.menu}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Opción 1 seleccionada")}>
+            <Image source={require('./opcion1.png')} style={styles.menuIcon} />
+            <Text style={styles.menuText}>Opción 1</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Opción 2 seleccionada")}>
+            <Image source={require('./opcion2.png')} style={styles.menuIcon} />
+            <Text style={styles.menuText}>Opción 2</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Opción 3 seleccionada")}>
+            <Image source={require('./opcion3.png')} style={styles.menuIcon} />
+            <Text style={styles.menuText}>Opción 3</Text>
+          </TouchableOpacity>
         </View>
       )}
     </View>
@@ -45,33 +40,54 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  topLeft: {
+  button: {
+    padding: 20,
+    marginBottom: 10,
+    borderRadius: 25,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  topLeftButton: {
     position: 'absolute',
+    top: 20,
     left: 20,
+    backgroundColor: 'purple',
   },
-  menuButton: {
-    padding: 10,
-  },
-  bottomRight: {
+  bottomRightButton: {
     position: 'absolute',
     bottom: 20,
     right: 20,
+    backgroundColor: 'purple',
   },
-  button: {
-    padding: 10,
-  },
-  menuView: {
+  menu: {
     position: 'absolute',
-    top: 50,
-    left: 20,
-    backgroundColor: 'white',
+    top: 100,
+    backgroundColor: 'purple',
     padding: 10,
+    borderRadius: 10,
+  },
+  menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
     borderRadius: 5,
+    marginBottom: 10,
+  },
+  menuText: {
+    fontSize: 16,
+    color: 'white',
+    marginLeft: 10,
+  },
+  menuIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 10,
   },
 });
 
-export default App;
+export default MenuExample;
