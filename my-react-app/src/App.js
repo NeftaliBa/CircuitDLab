@@ -1,11 +1,37 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, Modal } from 'react-native';
+
+// Importa todas las imágenes estáticas al principio
+import image1 from './image1.jpg';
+import image2 from './image2.jpg';
+import image3 from './image3.jpg';
+import image4 from './image4.jpg';
+import image5 from './image5.jpg';
+
+const images = [image1, image2, image3, image4, image5];
 
 const MenuExample = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const toggleMenuVisibility = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const selectOption = (option) => {
+    setSelectedOption(option);
+  };
+
+  const closeModal = () => {
+    setSelectedOption(null);
+  };
+
+  const applyOption = () => {
+    // Aquí puedes agregar la lógica para aplicar la opción seleccionada
+    // Por ejemplo, podrías navegar a otra vista o realizar alguna acción específica
+    // También podrías pasar la opción seleccionada a otra parte de tu aplicación
+    console.log('Opción aplicada:', selectedOption);
+    closeModal();
   };
 
   return (
@@ -19,20 +45,29 @@ const MenuExample = () => {
 
       {menuOpen && (
         <View style={styles.menu}>
-          <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Opción 1 seleccionada")}>
-            <Image source={require('./opcion1.png')} style={styles.menuIcon} />
-            <Text style={styles.menuText}>Opción 1</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Opción 2 seleccionada")}>
-            <Image source={require('./opcion2.png')} style={styles.menuIcon} />
-            <Text style={styles.menuText}>Opción 2</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Opción 3 seleccionada")}>
-            <Image source={require('./opcion3.png')} style={styles.menuIcon} />
-            <Text style={styles.menuText}>Opción 3</Text>
-          </TouchableOpacity>
+          {images.map((image, index) => (
+            <TouchableOpacity key={index} style={styles.menuItem} onPress={() => selectOption(index + 1)}>
+              <Image source={image} style={styles.menuIcon} />
+              <Text style={styles.menuText}>Motor {index + 1}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
       )}
+
+      <Modal visible={selectedOption !== null} transparent={true} onRequestClose={closeModal}>
+        <View style={styles.modalContainer}>
+          {selectedOption !== null && (
+            <View style={styles.modalContent}>
+              <Image source={images[selectedOption - 1]} style={styles.modalImage} />
+              <View style={styles.modalButtons}>
+                <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+                  <Text style={styles.closeButtonText}>Cerrar</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -88,6 +123,48 @@ const styles = StyleSheet.create({
     height: 24,
     marginRight: 10,
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalImage: {
+    width: 200,
+    height: 200,
+    marginBottom: 20,
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  closeButton: {
+    backgroundColor: 'purple',
+    padding: 10,
+    borderRadius: 5,
+    marginRight: 10,
+  },
+  closeButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  applyButton: {
+    backgroundColor: 'purple',
+    padding: 10,
+    borderRadius: 5,
+    marginLeft: 10,
+  },
+  applyButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
 });
 
-export default MenuExample;
+export default MenuExample;
