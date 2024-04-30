@@ -23,14 +23,14 @@ export default function App() {
 
       <Modal visible={isModalVisible} onRequestClose={() => setIsModalVisible(false)} animationType="fade" presentationStyle="overFullScreen" transparent={true} >
         <View style={styles.modales}>
-          <View style={styles.cabecera}>
-            <Text style={styles.textoCabecera}>MÁQUINAS</Text>
-          </View>
           <View style={styles.cuerpo}>
             <TouchableOpacity style={styles.equis} onPress={() => setIsModalVisible(true)}>
               <MaterialCommunityIcons name="close-thick" size={40} color="#00FFFF" onPress={() => setIsModalVisible(false)} />
             </TouchableOpacity>
             <Text style={styles.cambio}> HERRAMIENTAS </Text>
+          </View>
+          <View style={styles.cabecera}>
+            <Text style={styles.textoCabecera}>MÁQUINAS</Text>
           </View>
         </View>
 
