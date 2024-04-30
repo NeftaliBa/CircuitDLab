@@ -25,17 +25,16 @@ const MenuExample = () => {
   const closeModal = () => {
     setSelectedOption(null);
   };
-
+//creacion de rama
   const applyOption = () => {
-    // Aquí puedes agregar la lógica para aplicar la opción seleccionada
-    // Por ejemplo, podrías navegar a otra vista o realizar alguna acción específica
-    // También podrías pasar la opción seleccionada a otra parte de tu aplicación
     console.log('Opción aplicada:', selectedOption);
     closeModal();
+
   };
 
   return (
     <View style={styles.container}>
+            <StatusBar hidden />
       <TouchableOpacity style={[styles.button, styles.topLeftButton]} onPress={toggleMenuVisibility}>
         <Text style={styles.buttonText}>Botón 1</Text>
       </TouchableOpacity>
